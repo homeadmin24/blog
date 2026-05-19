@@ -1,6 +1,12 @@
 {
   "name": "blog",
   "compatibility_date": "2026-05-19",
+  "routes": [
+    {
+      "pattern": "blog.homeadmin24.de",
+      "custom_domain": true
+    }
+  ],
   "assets": {
     "directory": "./public",
     "html_handling": "auto-trailing-slash",
