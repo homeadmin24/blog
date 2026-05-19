@@ -1,0 +1,88 @@
+baseURL = 'https://blog.homeadmin24.de/'
+languageCode = 'de-de'
+title = 'HOMEADMIN24'
+theme = 'PaperMod'
+
+[params]
+  description = "WEG-Verwaltung, Immobilienverwaltung & Open-Source Software"
+  author = "homeadmin24"
+
+  # Footer copyright
+  copyright = "© 2025 homeadmin24"
+
+  # Hide "Powered by Hugo & PaperMod"
+  hideCredits = true
+
+  # Show reading time
+  ShowReadingTime = true
+
+  # Show table of contents
+  ShowToc = true
+  TocOpen = false
+
+  # Show code copy button
+  ShowCodeCopyButtons = true
+
+  # Date format
+  DateFormat = "2. January 2006"
+
+  # Home page info
+  [params.homeInfoParams]
+    Title = "homeadmin24 Blog 🏠"
+    Content = """
+**Fachwissen rund um WEG-Verwaltung, Immobilienverwaltung und moderne Verwaltungssoftware.**
+
+Wir teilen praktisches Wissen, rechtliche Updates und technische Einblicke für:
+- Wohnungseigentümergemeinschaften (WEG)
+- Hausverwaltungen & Immobilienverwalter
+- Eigentümer & Beiräte
+- Software-Entwickler im PropTech-Bereich
+
+**Themen:**
+- 📋 WEG-Recht & Gesetzesänderungen
+- 💰 Betriebskostenabrechnung & Hausgeldabrechnung
+- 🏗️ Technische Gebäudeverwaltung
+- 🤖 AI & Automatisierung in der Verwaltung
+- 💻 Open-Source Verwaltungssoftware
+- 🎓 IHK-Zertifizierung & Weiterbildung
+"""
+
+  # Profile mode (alternative to home info)
+  [params.profileMode]
+    enabled = false
+
+  # Social icons
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/homeadmin24"
+
+  [[params.socialIcons]]
+    name = "email"
+    url = "mailto:info@homeadmin24.de"
+
+# Menu
+[[menu.main]]
+  name = "Kategorien"
+  url = "/categories/"
+  weight = 20
+
+[[menu.main]]
+  name = "Tags"
+  url = "/tags/"
+  weight = 30
+
+[[menu.main]]
+  name = "homeadmin24"
+  url = "https://homeadmin24.de"
+  weight = 50
+
+# Taxonomies
+[taxonomies]
+  category = 'categories'
+  tag = 'tags'
+
+# Markup settings
+[markup]
+  [markup.highlight]
+    style = 'monokai'
+    lineNos = true

@@ -1,0 +1,9 @@
+{{- define "main" }}
+<script>
+    window.location.href = "{{ "posts/" | absLangURL }}";
+</script>
+<noscript>
+    <meta http-equiv="refresh" content="0; url={{ "posts/" | absLangURL }}">
+</noscript>
+<p>Redirecting to <a href="{{ "posts/" | absLangURL }}">posts</a>...</p>
+{{- end }}

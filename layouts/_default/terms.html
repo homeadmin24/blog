@@ -1,0 +1,86 @@
+{{- define "main" }}
+
+<header class="page-header">
+  <h1>{{ .Title }}</h1>
+  {{- if .Description }}
+  <div class="post-description">{{ .Description }}</div>
+  {{- end }}
+</header>
+
+{{- if eq .Type "categories" }}
+
+{{- $categoryOrder := slice "Grundlagen" "Recht" "Finanzen" "Technik" "Versicherung" "Energie" }}
+{{- $plannedPages := where (where site.RegularPages "Section" "planned") "Params.planned" true }}
+
+<div class="category-hierarchy">
+  <div class="category-group">
+    <h2>Querschnittsthemen</h2>
+    <ul class="category-list">
+      {{- range slice "Allgemein" "Ressourcen" "Praxiswissen" }}
+        {{- $sharedTitle := . }}
+        {{- range $.Data.Terms.Alphabetical }}
+          {{- if eq .Page.Title $sharedTitle }}
+            {{- range .Pages.Reverse }}
+              <li class="category-item">
+                <a href="{{ .Permalink }}">
+                  <span class="category-name">{{ .Title }}</span>
+                  <span class="category-date{{ if .PublishDate.After now }} category-date-future{{ end }}">{{ .PublishDate.Format "02.01.2006" }}</span>
+                </a>
+              </li>
+            {{- end }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+    </ul>
+  </div>
+
+  {{- range $categoryOrder }}
+    {{- $categoryTitle := . }}
+    {{- $plannedInCategory := where $plannedPages "Params.intern_category" $categoryTitle }}
+    {{- range $.Data.Terms.Alphabetical }}
+      {{- if eq .Page.Title $categoryTitle }}
+        <div class="category-group">
+          <h2>{{ $categoryTitle }}</h2>
+          <ul class="category-list">
+            {{- range .Pages.Reverse }}
+              <li class="category-item">
+                <a href="{{ .Permalink }}">
+                  <span class="category-name">{{ .Title }}</span>
+                  <span class="category-date{{ if .PublishDate.After now }} category-date-future{{ end }}">{{ .PublishDate.Format "02.01.2006" }}</span>
+                </a>
+              </li>
+            {{- end }}
+            {{- if eq hugo.Environment "development" }}
+              {{- range $plannedInCategory.ByDate.Reverse }}
+              <li class="category-item category-item-planned">
+                <span class="category-planned-entry">
+                  <span class="category-name">{{ .Title }}</span>
+                  <span class="category-planned-badge">geplant</span>
+                </span>
+              </li>
+              {{- end }}
+            {{- end }}
+          </ul>
+        </div>
+      {{- end }}
+    {{- end }}
+  {{- end }}
+</div>
+
+{{- else }}
+
+{{- /* Default tag layout */ -}}
+<ul class="terms-tags">
+  {{- range .Data.Terms.Alphabetical }}
+  <li>
+    <a href="{{ .Page.Permalink }}">
+      {{ .Page.Title }}
+      <sup><strong><sup>{{ .Count }}</sup></strong></sup>
+    </a>
+  </li>
+  {{- end }}
+</ul>
+
+{{- end }}
+
+{{- end }}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language }}" dir="{{ .Language.LanguageDirection | default "auto" }}">
+
+<head>
+    {{- partial "head.html" . }}
+</head>
+
+<body class="
+{{- if (or (ne .Kind `page` ) (eq .Layout `archives`) (eq .Layout `search`)) -}}
+{{- print "list" -}}
+{{- end -}}
+{{- if eq site.Params.defaultTheme `dark` -}}
+{{- print " dark" }}
+{{- end -}}
+" id="top">
+
+<!-- Animated Background -->
+<div class="bg-animation"></div>
+
+<!-- Custom Header -->
+<header class="custom-hero">
+    <div class="container">
+        <div class="hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1><a href="{{ "posts/" | absLangURL }}" style="text-decoration: none; color: inherit;">HOMEADMIN24 <span class="highlight">blog</span></a></h1>
+                </div>
+                <nav class="button-row" id="menu">
+                    {{- range site.Menus.main }}
+                    <a href="{{ .URL | absLangURL }}" class="demo-btn">
+                        {{ .Name }}
+                    </a>
+                    {{- end }}
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+{{- if (not site.Params.disableScrollToTop) }}
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+{{- end }}
+
+<main class="main">
+    {{- block "main" . }}{{ end }}
+</main>
+
+{{ partial "footer.html" . }}
+
+</body>
+
+</html>

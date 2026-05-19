@@ -1,0 +1,141 @@
+{{- define "main" }}
+
+<style>
+.intern-index h1 {
+  color: #1e40af;
+  font-size: 1.5rem;
+  margin: 0 0 4px 0;
+}
+
+.intern-meta {
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+}
+
+.intern-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.intern-table thead tr {
+  background: #f1f5f9;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.intern-table th {
+  text-align: left;
+  padding: 9px 12px;
+  color: #374151;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.intern-table td {
+  padding: 7px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #374151;
+  vertical-align: middle;
+}
+
+.intern-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.intern-table tbody tr:hover td {
+  background: #f8fafc;
+}
+
+.col-id {
+  width: 40px;
+  color: #9ca3af;
+  font-variant-numeric: tabular-nums;
+}
+
+.col-date {
+  width: 105px;
+  white-space: nowrap;
+  color: #6b7280;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.82rem;
+}
+
+.col-cat {
+  width: 150px;
+}
+
+.cat-badge {
+  display: inline-block;
+  background: #dbeafe;
+  color: #1e40af;
+  border-radius: 4px;
+  padding: 1px 7px;
+  font-size: 0.78rem;
+  margin: 1px 2px 1px 0;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.planned-row td {
+  color: #6b7280;
+}
+
+.plan-badge {
+  display: inline-block;
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 4px;
+  padding: 1px 7px;
+  font-size: 0.78rem;
+  margin-left: 8px;
+  white-space: nowrap;
+  font-weight: 500;
+}
+</style>
+
+{{- $posts := (where site.RegularPages "Section" "in" (slice "posts" "planned")).ByDate }}
+
+<div class="intern-index">
+  <h1>Artikel-Index</h1>
+  <p class="intern-meta">{{ len $posts }} Artikel &nbsp;·&nbsp; intern</p>
+
+  <table class="intern-table">
+    <thead>
+      <tr>
+        <th class="col-id">#</th>
+        <th class="col-date">Datum</th>
+        <th class="col-cat">Kategorie</th>
+        <th>Titel</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{- range $i, $page := $posts }}
+      <tr{{ if $page.Params.planned }} class="planned-row"{{ end }}>
+        <td class="col-id">{{ add $i 1 }}</td>
+        <td class="col-date">{{ $page.Date.Format "2006-01-02" }}</td>
+        <td class="col-cat">
+          {{- if $page.Params.planned }}
+            {{- with $page.Params.intern_category }}
+            <span class="cat-badge">{{ . }}</span>
+            {{- end }}
+          {{- else }}
+            {{- range $page.Params.categories }}
+            <a href="{{ "/" | absURL }}categories/{{ . | urlize }}/" style="text-decoration:none;"><span class="cat-badge">{{ . }}</span></a>
+            {{- end }}
+          {{- end }}
+        </td>
+        <td>
+          {{- if $page.Params.planned }}
+          <span>{{ $page.Title }}</span><span class="plan-badge">Geplant</span>
+          {{- else }}
+          <a href="{{ $page.Permalink }}" style="color:#1e40af;text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">{{ $page.Title }}</a>
+          {{- end }}
+        </td>
+      </tr>
+      {{- end }}
+    </tbody>
+  </table>
+</div>
+
+{{- end }}
